@@ -59,6 +59,8 @@ function displayCart() {
   cartItemsContainer.appendChild(totalElement);
 }
 
+
+
 /**
  * Supprime un article du panier en fonction de son index
  * @param {number} index - Index de l'article à supprimer
@@ -85,9 +87,6 @@ function goToCheckout() {
 /**
  * Affiche le contenu du panier dans une alerte (optionnel)
  */
-/**
- * Affiche le contenu du panier dans une alerte (optionnel)
- */
 function viewCart() {
   const currentCart = JSON.parse(localStorage.getItem('cart')) || [];
   if (currentCart.length === 0) {
@@ -100,9 +99,11 @@ function viewCart() {
   });
   alert(cartDetails);
 }
+
 /******************************************
  *       Gestion des Modales              *
  ******************************************/
+
 
 function openLoginModal() {
   document.getElementById('loginModal').style.display = 'block';
@@ -132,6 +133,19 @@ window.onclick = function(event) {
   }
 };
 
+
+// Gestion des actions sur les boutons
+document.getElementById("addToCart").addEventListener("click", function(){
+  alert("Produit ajouté au panier !");
+  // Ici, vous pouvez ajouter la logique pour stocker le produit dans le panier (ex: via localStorage)
+});
+
+document.getElementById("orderNow").addEventListener("click", function(){
+  alert("Redirection vers la page de commande !");
+  // Par exemple, rediriger vers une page de checkout
+  // window.location.href = "checkout.html";
+});
+
 document.getElementById('loginForm')?.addEventListener('submit', function(e) {
   e.preventDefault();
   alert("Connexion réussie !");
@@ -159,10 +173,9 @@ function updateCartCounter() {
   }
 }
 
+
 // Appelle updateCartCounter quand le DOM est entièrement chargé
 window.onload = updateCartCounter;
-
-
 
 /**
  * Ajoute un abonnement au panier et enregistre dans le localStorage.
@@ -197,70 +210,25 @@ document.getElementById('hamburger-menu')?.addEventListener('click', function() 
   navLinks.classList.toggle('mobile-active');
 });
 
-// Fonction pour charger et afficher le contenu du panier dans le tableau
-function loadCart() {
-  const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-  const tableBody = document.querySelector('#cart-table tbody');
-  const totalPriceElement = document.getElementById('total-price');
-  tableBody.innerHTML = ''; // Vider le tableau
 
-  let total = 0;
-  cartItems.forEach(item => {
-    const row = document.createElement('tr');
+document.addEventListener('DOMContentLoaded', updateCartCounter);
+
+
+
+
+
+
+
+
     
-    // Création des cellules pour le nom du produit et le prix
-    const nameCell = document.createElement('td');
-    nameCell.textContent = item.name;
-    const priceCell = document.createElement('td');
-    priceCell.textContent = item.price + ' €';
-    
-    row.appendChild(nameCell);
-    row.appendChild(priceCell);
-    tableBody.appendChild(row);
-    
-    total += item.price; // Si des quantités sont gérées, multiplier par la quantité
-  });
-  
-  totalPriceElement.textContent = total.toFixed(2) + ' €';
-}
 
-// Gestion de la soumission du formulaire de checkout
-document.getElementById('checkoutForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  // Récupérer les valeurs du formulaire
-  const firstName = document.getElementById('firstName').value;
-  const lastName  = document.getElementById('lastName').value;
-  const email     = document.getElementById('email').value;
-  const phone     = document.getElementById('phone').value;
-  
-  // Ici, vous pouvez ajouter la logique de validation et de paiement
-  alert(`Merci ${firstName} ${lastName}, votre commande est en cours de traitement.`);
-  
-  // Optionnel : Vider le panier après validation
-  localStorage.removeItem('cart');
-  loadCart();
-});
 
-// Charger le panier dès que le DOM est prêt
-document.addEventListener('DOMContentLoaded', loadCart);
 
-// Fonction pour charger les transactions dans le tableau
-function loadTransactions() {
-  const tableBody = document.querySelector("#transactions-table tbody");
-  tableBody.innerHTML = ""; // Vider le contenu
 
-  transactions.forEach(tx => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${tx.id}</td>
-      <td>${tx.date}</td>
-      <td>${tx.total.toFixed(2)} €</td>
-      <td>${tx.status}</td>
-    `;
-    tableBody.appendChild(row);
-  });
-}
 
-// Charger les transactions lorsque le DOM est prêt
-document.addEventListener("DOMContentLoaded", loadTransactions);
+
+
+
+
+
 
